@@ -14,6 +14,8 @@ let iconElement = document.querySelector("#icon")
 
 iconElement.innerHTML = `<img src="${responce.data.condition.icon_url}" class="icon" />`
 
+getForecast(responce.data.city);
+
 
 
 descriptionElement.innerHTML = responce.data.condition.description;
@@ -51,12 +53,19 @@ function handleSearchSubmit(event) {
     searchCity(searchInput.value);
 }
 
+function getForecast(city){
+let apiKey = "d08fodtb894540abf5faf86b23ef312e";
+let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=metric`;
+axios(apiUrl).then(displayForecast);
+}
+
 let searchForm = document.querySelector("#search-form");
 searchForm.addEventListener("submit", handleSearchSubmit);
 
 searchCity("Manchester");
 
-function displayForecast() {
+function displayForecast(responce) {
+    console.log(responce.data);
     let forecastElement = document.querySelector("#forecast");
 
     let days = ["Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -79,4 +88,4 @@ function displayForecast() {
    forecastElement.innerHTML = forecastHtml;
 }
 
-displayForecast();
+getForecast("Manchester");
